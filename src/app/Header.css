@@ -1,0 +1,16 @@
+.Header {
+    display: grid;
+    grid-template-columns: 75px 1fr;
+    align-items: center;
+    grid-gap: 20px;
+    background-color:lightcyan;
+    border: 1px solid lightslategray;
+}
+
+.Header .logo {
+    width: 100%
+}
+
+.Header h1 {
+    margin: 0;
+}

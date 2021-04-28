@@ -1,0 +1,27 @@
+.PokeItem {
+    list-style: none;
+    background-color: lightslategray;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    /* width: 200px; */
+
+    display: grid;
+    grid-template-rows: 40px 160px 30px;
+    grid-gap: 15px;
+    justify-items: center;
+
+}
+
+.PokeItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.PokeItem h2 {
+    margin: 0;
+}
+
+.PokeItem p {
+    margin: 0;
+}
