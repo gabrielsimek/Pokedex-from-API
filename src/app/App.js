@@ -5,7 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Search from './Search';
 import PokeList from '../pokemon/PokeList';
-import request, { search } from 'superagent';
+import request from 'superagent';
 
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?';
@@ -14,7 +14,6 @@ const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?';
 class App extends Component {
   state = {
     pokemon: null,
-    search: '' 
   }
 
   // (`https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=${sortFilter}&direction=asc&perPage=50`)

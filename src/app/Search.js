@@ -57,7 +57,7 @@ export default class Search extends Component {
             value={sortFilter}
             onChange={this.handleSortChange}
           >
-            <option value="pokemon">All</option>
+            <option value="pokemon">Name</option>
             <option value="shape">Shape</option>
             <option value="attack">Attack</option>
             <option value="ability_1">Ability</option>
