@@ -5,14 +5,16 @@ export default class PokeItem extends Component {
   
   render() {
     const poke = this.props.poke;
-    console.log(poke);
+    
     return (
       <li className="PokeItem">
-        <h2>Pokemon</h2>
+        <h2>{poke.pokemon}</h2>
         <img src={poke.url_image} alt={poke.pokemon}/>
         <p>Type: {poke.type_1}</p>
         <p>Attack: {poke.attack} </p>
         <p>Defense: {poke.defense} </p>
+        <p>Shape: {poke.shape} </p>
+        <p>Ability: {poke.ability_1} </p>
       </li>
     );
   }
