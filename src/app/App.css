@@ -11,3 +11,7 @@
   overflow: auto;
 
 }
+
+.noMatch {
+  font-size: 10rem;
+}

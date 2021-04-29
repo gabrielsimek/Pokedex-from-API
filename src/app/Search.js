@@ -4,15 +4,15 @@ import './Search.css';
 export default class Search extends Component {
     state = {
       search: '',
-      sortFilter: '',
+      sortFilter: 'pokemon',
       typeFilter: ''
 
     }
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.onSort(this.state.sortFilter);
-      this.props.onSearch(this.state.search);
+      // this.props.onSort(this.state.sortFilter);
+      this.props.onSearch(this.state);
       
     }
 
@@ -28,7 +28,8 @@ export default class Search extends Component {
   
     componentDidUpdate(prevProp, prevState) {
       if (prevState !== this.state) {
-        this.props.onSort(this.state);
+        this.props.onSearch(this.state);
+        // this.props.onSearch(this.state.search);
       }
     }
     render() {
