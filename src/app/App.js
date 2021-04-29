@@ -8,7 +8,7 @@ import PokeList from '../pokemon/PokeList';
 import request from 'superagent';
 
 
-const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=pokemon&direction=asc';
+const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=pokemon&direction=asc&perPage=800';
 
 
 class App extends Component {
@@ -17,19 +17,25 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const response = await request.get(POKEMON_API_URL);
-    
-    this.setState({ pokemon: response.body.results });
-    
+    this.fetchPokemon();
   }
+  async fetchPokemon(search) {
+    const response = await request.get(POKEMON_API_URL).query({ pokemon: search });
+    this.setState({ pokemon: response.body.results });
 
-  handleSearch = ({ nameFilter, sortFilter }) => {
+  } 
+
+  handleSearch = async (search) => {
+
+    this.fetchPokemon(search);
+    
+  }; 
+  
+
+  handleSort = ({ sortFilter }) => {
     console.log(sortFilter);
-    const regEx = new RegExp(nameFilter, 'i');
     const pokemon = this.state.pokemon;
-    const sortedPokemon = pokemon.filter((poke) => {
-      return poke.pokemon.match(regEx);
-    })
+    const sortedPokemon = pokemon
       .sort((a, b) => {
         
         if (sortFilter === 'attack') {
@@ -47,7 +53,7 @@ class App extends Component {
     
     
     this.setState({ pokemon: sortedPokemon }); 
-  }
+  };
  
 
  
@@ -61,7 +67,7 @@ class App extends Component {
       <div className="App">
         <Header/>
 
-        <Search onSearch={this.handleSearch}/>
+        <Search onSearch={this.handleSearch} onSort={this.handleSort}/>
 
         <main>
           <PokeList pokemon={pokemon}/>

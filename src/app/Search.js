@@ -3,15 +3,17 @@ import './Search.css';
 
 export default class Search extends Component {
     state = {
-      nameFilter: '',
-      sortFilter: 'pokemon',
+      search: '',
+      sortFilter: '',
       typeFilter: ''
 
     }
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.onSearch(this.state);
+      this.props.onSort(this.state.sortFilter);
+      this.props.onSearch(this.state.search);
+      
     }
 
     handleSortChange = (e) => {
@@ -20,23 +22,23 @@ export default class Search extends Component {
     }
 
     handleNameChange = (e) => {
-      this.setState({ nameFilter: e.target.value });
+      this.setState({ search: e.target.value });
     }
 
+  
     componentDidUpdate(prevProp, prevState) {
       if (prevState !== this.state) {
-        this.props.onSearch(this.state);
+        this.props.onSort(this.state);
       }
     }
-  
     render() {
-      const { nameFilter, sortFilter } = this.state;
+      const { search, sortFilter } = this.state;
       return (
         <form className="Search" onSubmit={this.handleSubmit}>
 
           <input
             name="nameSearch"
-            value={nameFilter}
+            value={search}
             onChange={this.handleNameChange}
           > 
           </input>
