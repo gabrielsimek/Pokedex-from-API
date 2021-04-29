@@ -6,9 +6,9 @@ export default class Search extends Component {
       search: '',
       sortFilter: 'pokemon',
       typeFilter: '',
-      sortOrder: '',
-      perPage: ''
-
+      sortOrder: 'asc',
+      perPage: '20'
+//The source of truth! ^^
     }
 
     handleSubmit = (e) => {

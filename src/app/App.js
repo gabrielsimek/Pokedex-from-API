@@ -31,6 +31,7 @@ class App extends Component {
   } 
 
   handleSearch = ({ search, sortFilter, sortOrder, perPage }) => {
+    console.log(search);
     // this.setState ({ search: search });
     this.fetchPokemon(search, sortFilter, sortOrder, perPage);
   }; 
