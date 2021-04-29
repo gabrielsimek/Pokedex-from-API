@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import Search from './Search';
 import PokeList from '../pokemon/PokeList';
 import request from 'superagent';
 
@@ -14,11 +15,16 @@ class App extends Component {
     pokemon: []
   }
 
+  handleSearch = (someState) => {
+    console.log(someState);
+
+  }
+ 
 
   async componentDidMount() {
     const response = await request.get(POKEMON_API_URL);
     this.setState({ pokemon: response.body.results });
-    console.log(this.state);
+    
   }
   render() {
     const { pokemon } = this.state;
@@ -27,6 +33,8 @@ class App extends Component {
 
       <div className="App">
         <Header/>
+
+        <Search handleSearch={this.handleSearch}/>
 
         <main>
           <PokeList pokemon={pokemon}/>
