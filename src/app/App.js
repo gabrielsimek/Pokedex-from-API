@@ -8,31 +8,32 @@ import PokeList from '../pokemon/PokeList';
 import request, { search } from 'superagent';
 
 
-const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?perPage=50';
+const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?';
 
 
 class App extends Component {
   state = {
-    pokemon: [],
+    pokemon: null,
     search: '' 
   }
 
   // (`https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=${sortFilter}&direction=asc&perPage=50`)
 
   async componentDidMount() {
-   
     this.fetchPokemon();
   }
-  async fetchPokemon(search, sortFilter) {
+  async fetchPokemon(search, sortFilter, sortOrder, perPage) {
     const response = await request.get(POKEMON_API_URL).query({ pokemon: search })
-      .query({ sort: sortFilter });
+      .query({ sort: sortFilter, direction: sortOrder })
+      .query({ perPage: perPage });
+
     this.setState({ pokemon: response.body.results });
 
   } 
 
-  handleSearch = ({ search, sortFilter }) => {
-    this.setState ({ search: search });
-    this.fetchPokemon(search, sortFilter);
+  handleSearch = ({ search, sortFilter, sortOrder, perPage }) => {
+    // this.setState ({ search: search });
+    this.fetchPokemon(search, sortFilter, sortOrder, perPage);
   }; 
   
   // async handleSort(sortFilter) {
@@ -77,9 +78,11 @@ class App extends Component {
         <Search onSearch={this.handleSearch} />
 
         <main>
-          {pokemon.length !== 0
+        
+          {pokemon && (pokemon.length
+          //why does this only does this only not display no match on load when wrapped in ()!!!
             ? <PokeList pokemon={pokemon}/>
-            : <p className="noMatch">No matching Pokemon</p> }
+            : <p className="noMatch">No matching Pokemon</p>)}
           {/* <PokeList pokemon={pokemon}/> */}
         </main>
         <Footer/>
