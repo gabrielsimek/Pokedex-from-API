@@ -4,14 +4,14 @@ import './Search.css';
 export default class Search extends Component {
     state = {
       nameFilter: '',
-      sortFilter: '',
+      sortFilter: 'pokemon',
       typeFilter: ''
 
     }
 
     handleSubmit = (e) => {
       e.preventDefault();
-      this.props.handleSearch(this.state);
+      this.props.onSearch(this.state);
     }
 
     handleSortChange = (e) => {
@@ -21,6 +21,12 @@ export default class Search extends Component {
 
     handleNameChange = (e) => {
       this.setState({ nameFilter: e.target.value });
+    }
+
+    componentDidUpdate(prevProp, prevState) {
+      if (prevState !== this.state) {
+        this.props.onSearch(this.state);
+      }
     }
   
     render() {
@@ -38,7 +44,7 @@ export default class Search extends Component {
             value={sortFilter}
             onChange={this.handleSortChange}
           >
-            <option>All</option>
+            <option value="pokemon">All</option>
             <option value="shape">Shape</option>
             <option value="attack">Attack</option>
             <option value="ability_1">Ability</option>
