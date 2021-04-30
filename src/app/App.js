@@ -16,57 +16,36 @@ class App extends Component {
     pokemon: null,
   }
 
-  // (`https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=${sortFilter}&direction=asc&perPage=50`)
+ 
 
   async componentDidMount() {
+    //set org state of app, get pokemon and sort by name in asc
+    // const asc = 'asc';
+    // const pokeSort = 'pokemon';
+    // const response = await request.get(POKEMON_API_URL).query({ sort: pokeSort, direction: asc });
+    // this.setState({ pokemon: response.body.results });
+
     this.fetchPokemon();
   }
+
   async fetchPokemon(search, sortFilter, sortOrder, perPage) {
-    const response = await request.get(POKEMON_API_URL).query({ pokemon: search })
+    const response = await request.get(POKEMON_API_URL)
+      .query({ pokemon: search })
       .query({ sort: sortFilter, direction: sortOrder })
       .query({ perPage: perPage });
+      // .query ({ page: this.state.page });
 
     this.setState({ pokemon: response.body.results });
-
+    
   } 
 
+
+
   handleSearch = ({ search, sortFilter, sortOrder, perPage }) => {
-    console.log(search);
-    // this.setState ({ search: search });
     this.fetchPokemon(search, sortFilter, sortOrder, perPage);
   }; 
   
-  // async handleSort(sortFilter) {
-  //   this.fetchPokemon(sortFilter);
-  // }
 
-  // handleSort = ({ sortFilter }) => {
-  //   console.log(sortFilter);
-  //   const pokemon = this.state.pokemon;
-  //   const sortedPokemon = pokemon
-  //     .sort((a, b) => {
-        
-  //       if (sortFilter === 'attack') {
-  //         if (a[sortFilter] > b[sortFilter]) return -1;
-  //         if (a[sortFilter] < b[sortFilter]) return 1;
-  //         return 0;
-
-  //       } else {
-  //         if (a[sortFilter] < b[sortFilter]) return -1;
-  //         if (a[sortFilter] > b[sortFilter]) return 1;
-  //         return 0;}
-        
-
-  //     });
-    
-    
-  //   this.setState({ pokemon: sortedPokemon }); 
-  // };
- 
-
- 
-
-  
   render() {
     const { pokemon } = this.state;
     return (
