@@ -16,7 +16,7 @@ class App extends Component {
     pokemon: null,
   }
 
- 
+  //anamoys call back () is a void refetches data after setting state.
 
   async componentDidMount() {
     //set org state of app, get pokemon and sort by name in asc
@@ -28,45 +28,46 @@ class App extends Component {
     this.fetchPokemon();
   }
 
-  async fetchPokemon(search, sortFilter, sortOrder, perPage) {
+  async fetchPokemon(search, sortFilter, sortOrder, perPage, page) {
+    //can change all this state so it's names match the apis query params and pass in as one object to query
     const response = await request.get(POKEMON_API_URL)
       .query({ pokemon: search })
       .query({ sort: sortFilter, direction: sortOrder })
-      .query({ perPage: perPage });
-      // .query ({ page: this.state.page });
+      .query({ perPage: perPage })
+      .query({ page: page });
 
     this.setState({ pokemon: response.body.results });
-    
-  } 
+
+  }
 
 
 
-  handleSearch = ({ search, sortFilter, sortOrder, perPage }) => {
-    this.fetchPokemon(search, sortFilter, sortOrder, perPage);
-  }; 
-  
+  handleSearch = ({ search, sortFilter, sortOrder, perPage, page }) => {
+    this.fetchPokemon(search, sortFilter, sortOrder, perPage, page);
+  };
+
 
   render() {
     const { pokemon } = this.state;
     return (
-      
+
 
       <div className="App">
-        <Header/>
+        <Header />
 
         <Search onSearch={this.handleSearch} />
 
         <main>
-        
+
           {pokemon && (pokemon.length
-          //why does this only does this only not display no match on load when wrapped in ()!!!
-            ? <PokeList pokemon={pokemon}/>
+            //why does this only does this only not display no match on load when wrapped in ()!!!
+            ? <PokeList pokemon={pokemon} />
             : <p className="noMatch">No matching Pokemon</p>)}
           {/* <PokeList pokemon={pokemon}/> */}
         </main>
-        <Footer/>
+        <Footer />
 
-       
+
       </div>
 
     );
