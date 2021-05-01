@@ -29,7 +29,7 @@ export default class Search extends Component {
 
   handlePageChange = (change) => {
     const onSearch = this.props.onSearch;
-   
+
     this.setState({ page: this.state.page + change },
       () => {
         onSearch(this.state);
@@ -113,8 +113,8 @@ export default class Search extends Component {
 
 
         </form>
-
-        <Paging pageChange={this.handlePageChange} pokemon={this.props.pokemon} page={page} perPage={perPage} />
+        {/* index.js:1 Warning: `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components. */}
+        <Paging pageChange={this.handlePageChange} pokemon={this.props.pokemon} page={page} perPage={perPage} searchTerm={search} />
       </div>
     );
   }
