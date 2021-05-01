@@ -12,7 +12,11 @@ export default class Paging extends Component {
       this.props.pageChange(1);
     }
 
-
+    handleToFirstPage = () => {
+      const thisPage = this.props.page;
+      this.props.pageChange(((-thisPage) + 1));
+      console.log(this.props.page);
+    }
 
 
 
@@ -34,6 +38,7 @@ export default class Paging extends Component {
             }
             disabled={pokemon && pokemon.length < perPage}>
                     Next</button>
+          <button onClick={this.handleToFirstPage}>To first Page</button>
         </div>
       );
     }
