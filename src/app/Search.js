@@ -18,6 +18,7 @@ export default class Search extends Component {
     const onSearch = this.props.onSearch;
     e.preventDefault();
     // this.props.onSort(this.state.sortFilter);
+    //set page back to 1 if doing a search, then update with the search terms only on submit
     this.setState({ page: 1 },
       () => {
         onSearch(this.state);
@@ -28,17 +29,14 @@ export default class Search extends Component {
 
   handlePageChange = (change) => {
     const onSearch = this.props.onSearch;
-
-    // this.setState({ page: this.state.page + change },
-    //   () => {
-    //     onSearch(this.state);
-    //   }
-    // );
+   
     this.setState({ page: this.state.page + change },
       () => {
         onSearch(this.state);
 
       });
+
+
   }
 
   handleSortChange = (e) => {
@@ -116,7 +114,7 @@ export default class Search extends Component {
 
         </form>
 
-        Page: {page}<Paging pageChange={this.handlePageChange} />
+        <Paging pageChange={this.handlePageChange} pokemon={this.props.pokemon} page={page} perPage={perPage} />
       </div>
     );
   }

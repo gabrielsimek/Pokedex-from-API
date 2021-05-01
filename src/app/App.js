@@ -20,12 +20,12 @@ class App extends Component {
 
   async componentDidMount() {
     //set org state of app, get pokemon and sort by name in asc
-    // const asc = 'asc';
-    // const pokeSort = 'pokemon';
-    // const response = await request.get(POKEMON_API_URL).query({ sort: pokeSort, direction: asc });
-    // this.setState({ pokemon: response.body.results });
+    const asc = 'asc';
+    const pokeSort = 'pokemon';
+    const response = await request.get(POKEMON_API_URL).query({ sort: pokeSort, direction: asc });
+    this.setState({ pokemon: response.body.results });
 
-    this.fetchPokemon();
+    // this.fetchPokemon();
   }
 
   async fetchPokemon(search, sortFilter, sortOrder, perPage, page) {
@@ -39,11 +39,21 @@ class App extends Component {
     this.setState({ pokemon: response.body.results });
 
   }
+  // if (pokemon.length === 0) {
+  //   console.log('no more poke');
 
+  // } else {
+  //   this.setState({ page: this.state.page + change },
+  //     () => {
+  //       onSearch(this.state);
+
+  //     });
 
 
   handleSearch = ({ search, sortFilter, sortOrder, perPage, page }) => {
+
     this.fetchPokemon(search, sortFilter, sortOrder, perPage, page);
+
   };
 
 
@@ -52,10 +62,11 @@ class App extends Component {
     return (
 
 
+
       <div className="App">
         <Header />
 
-        <Search onSearch={this.handleSearch} />
+        <Search onSearch={this.handleSearch} pokemon={pokemon} />
 
         <main>
 
