@@ -40,13 +40,15 @@ class App extends Component {
     // this.fetchPokemon();
   }
 
-  async fetchPokemon(search, sortFilter, sortOrder, perPage, page) {
+  async fetchPokemon(search, sortFilter, sortOrder, perPage, page, type) {
+    console.log(sortFilter, type);
     //can change all this state so it's names match the apis query params and pass in as one object to query
     const response = await request.get(POKEMON_API_URL)
-      .query({ pokemon: search })
+      .query({ pokemon: search, type: type })
       .query({ sort: sortFilter, direction: sortOrder })
       .query({ perPage: perPage })
       .query({ page: page });
+
 
     this.setState({ pokemon: response.body.results });
 
@@ -62,9 +64,9 @@ class App extends Component {
   //     });
 
 
-  handleSearch = ({ search, sortFilter, sortOrder, perPage, page }) => {
+  handleSearch = ({ search, sortFilter, sortOrder, perPage, page, type }) => {
 
-    this.fetchPokemon(search, sortFilter, sortOrder, perPage, page);
+    this.fetchPokemon(search, sortFilter, sortOrder, perPage, page, type);
 
   };
 

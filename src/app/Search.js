@@ -11,6 +11,7 @@ export default class Search extends Component {
     sortOrder: 'asc',
     perPage: '20',
     page: 1,
+    type: undefined
     //The source of truth! ^^
   }
 
@@ -70,8 +71,8 @@ export default class Search extends Component {
 
   render() {
     const { search, sortFilter, sortOrder, perPage, page, type } = this.state;
+    console.log(type);
     const { types } = this.props;
-    console.log(types);
 
     return (
       <div>
