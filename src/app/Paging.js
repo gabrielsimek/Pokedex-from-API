@@ -15,14 +15,14 @@ export default class Paging extends Component {
   handleToFirstPage = () => {
     const thisPage = this.props.page;
     this.props.pageChange(((-thisPage) + 1));
-    console.log(this.props.page);
+    // console.log(this.props.page);
   }
 
 
   handleToLastPage = () => {
     const thisPage = this.props.page;
     const perPage = Number(this.props.perPage);
-    console.log(perPage);
+    // console.log(perPage);
 
 
     if (perPage === 20) {
@@ -45,7 +45,7 @@ export default class Paging extends Component {
     const pokemon = this.props.pokemon;
     const perPage = this.props.perPage;
     const searchTerm = this.props.searchTerm;
-    console.log(page, pokemon, perPage, searchTerm);
+    // console.log(page, pokemon, perPage, searchTerm);
 
 
     return (

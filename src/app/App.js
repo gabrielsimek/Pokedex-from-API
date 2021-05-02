@@ -9,13 +9,25 @@ import request from 'superagent';
 
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?';
+const POKEMON_API_TYPES_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex/types';
 
 
 class App extends Component {
   state = {
     pokemon: null,
+    types: ''
   }
 
+
+  async fetchType() {
+
+    const response = await request.get(POKEMON_API_TYPES_URL);
+
+    const types = [...new Set(response.body.map(type => type.type))];
+    this.setState({ types: types });
+
+
+  }
   //anamoys call back () is a void refetches data after setting state.
 
   async componentDidMount() {
@@ -24,6 +36,7 @@ class App extends Component {
     const pokeSort = 'pokemon';
     const response = await request.get(POKEMON_API_URL).query({ sort: pokeSort, direction: asc });
     this.setState({ pokemon: response.body.results });
+    this.fetchType();
 
     // this.fetchPokemon();
   }
