@@ -58,7 +58,12 @@ export default class Search extends Component {
   }
 
   handleTypeChange = (e) => {
-    this.setState({ type: e.target.value });
+    const onSearch = this.props.onSearch;
+    this.setState({ type: e.target.value, page: 1 },
+      () => {
+        onSearch(this.state);
+      }
+    );
   }
   componentDidUpdate(prevProp, prevState) {
     if (prevState !== this.state) {
@@ -71,7 +76,7 @@ export default class Search extends Component {
 
   render() {
     const { search, sortFilter, sortOrder, perPage, page, type } = this.state;
-    console.log(type);
+
     const { types } = this.props;
 
     return (
@@ -135,7 +140,7 @@ export default class Search extends Component {
 
         </form>
         {/* index.js:1 Warning: `value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components. */}
-        <Paging pageChange={this.handlePageChange} pokemon={this.props.pokemon} page={page} perPage={perPage} searchTerm={search} />
+        <Paging pageChange={this.handlePageChange} pokemon={this.props.pokemon} page={page} perPage={perPage} searchTerm={search} type={type} />
       </div>
     );
   }

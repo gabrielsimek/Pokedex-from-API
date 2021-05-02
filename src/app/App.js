@@ -44,7 +44,8 @@ class App extends Component {
     console.log(sortFilter, type);
     //can change all this state so it's names match the apis query params and pass in as one object to query
     const response = await request.get(POKEMON_API_URL)
-      .query({ pokemon: search, type: type })
+      .query({ pokemon: search })
+      .query({ type: type || undefined })
       .query({ sort: sortFilter, direction: sortOrder })
       .query({ perPage: perPage })
       .query({ page: page });

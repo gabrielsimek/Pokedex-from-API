@@ -41,10 +41,12 @@ export default class Paging extends Component {
   render() {
 
 
-    const page = this.props.page;
-    const pokemon = this.props.pokemon;
-    const perPage = this.props.perPage;
-    const searchTerm = this.props.searchTerm;
+    // const page = this.props.page;
+    // const pokemon = this.props.pokemon;
+    // const perPage = this.props.perPage;
+    // const searchTerm = this.props.searchTerm;
+    const { page, pokemon, perPage, searchTerm, type } = this.props;
+    console.log(page, pokemon, perPage, searchTerm, type);
     // console.log(page, pokemon, perPage, searchTerm);
 
 
@@ -65,7 +67,7 @@ export default class Paging extends Component {
           To first Page</button>
 
         <button
-          disabled={(pokemon && searchTerm) || (pokemon && pokemon.length < perPage)}
+          disabled={(pokemon && searchTerm) || (pokemon && type) || (pokemon && pokemon.length < perPage)}
           onClick={this.handleToLastPage} >
           To last Page</button>
 
