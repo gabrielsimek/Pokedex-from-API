@@ -29,7 +29,7 @@ export default class Search extends Component {
 
   handlePageChange = (change) => {
     const onSearch = this.props.onSearch;
-
+    //set the state, once it's set send it back up to app via callback?
     this.setState({ page: this.state.page + change },
       () => {
         onSearch(this.state);

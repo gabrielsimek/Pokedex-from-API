@@ -61,7 +61,7 @@ export default class Paging extends Component {
           Next</button>
         <button
           onClick={this.handleToFirstPage}
-          disabled={(pokemon && searchTerm)}>
+          disabled={(pokemon && searchTerm) || page === 1}>
           To first Page</button>
 
         <button
