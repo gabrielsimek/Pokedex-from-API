@@ -10,7 +10,7 @@ export default class Search extends Component {
     typeFilter: '',
     sortOrder: 'asc',
     perPage: '20',
-    page: 1
+    page: 1,
     //The source of truth! ^^
   }
 
@@ -56,7 +56,9 @@ export default class Search extends Component {
     this.setState({ perPage: e.target.value });
   }
 
-
+  handleTypeChange = (e) => {
+    this.setState({ type: e.target.value });
+  }
   componentDidUpdate(prevProp, prevState) {
     if (prevState !== this.state) {
       this.props.onSearch(this.state);
@@ -67,7 +69,10 @@ export default class Search extends Component {
 
 
   render() {
-    const { search, sortFilter, sortOrder, perPage, page } = this.state;
+    const { search, sortFilter, sortOrder, perPage, page, type } = this.state;
+    const { types } = this.props;
+    console.log(types);
+
     return (
       <div>
         <form className="Search" onSubmit={this.handleSubmit}>
@@ -106,6 +111,21 @@ export default class Search extends Component {
             <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
+
+          </select>
+
+
+          <select
+            value={type}
+            onChange={this.handleTypeChange}
+          >
+            <option value=''>types</option>
+            {types.map((type, index) => {
+              return <option key={index} value={type}>{type}</option>;
+
+            })
+            }
+
 
           </select>
 

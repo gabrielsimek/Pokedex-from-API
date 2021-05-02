@@ -15,19 +15,18 @@ const POKEMON_API_TYPES_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex
 class App extends Component {
   state = {
     pokemon: null,
-    types: ''
+    types: []
   }
 
 
   async fetchType() {
 
     const response = await request.get(POKEMON_API_TYPES_URL);
-
     const types = [...new Set(response.body.map(type => type.type))];
     this.setState({ types: types });
 
-
   }
+
   //anamoys call back () is a void refetches data after setting state.
 
   async componentDidMount() {
@@ -71,7 +70,7 @@ class App extends Component {
 
 
   render() {
-    const { pokemon } = this.state;
+    const { pokemon, types } = this.state;
     return (
 
 
@@ -79,7 +78,7 @@ class App extends Component {
       <div className="App">
         <Header />
 
-        <Search onSearch={this.handleSearch} pokemon={pokemon} />
+        <Search onSearch={this.handleSearch} pokemon={pokemon} types={types} />
 
         <main>
 
