@@ -9,84 +9,91 @@ import request from 'superagent';
 
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex?';
+const POKEMON_API_TYPES_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex/types';
 
 
 class App extends Component {
   state = {
     pokemon: null,
+    types: []
   }
 
-  // (`https://pokedex-alchemy.herokuapp.com/api/pokedex?sort=${sortFilter}&direction=asc&perPage=50`)
+
+  async fetchType() {
+
+    const response = await request.get(POKEMON_API_TYPES_URL);
+    const types = [...new Set(response.body.map(type => type.type))];
+    this.setState({ types: types });
+
+  }
+
+  //anamoys call back () is a void refetches data after setting state.
 
   async componentDidMount() {
-    this.fetchPokemon();
+    //set org state of app, get pokemon and sort by name in asc
+    const asc = 'asc';
+    const pokeSort = 'pokemon';
+    const response = await request.get(POKEMON_API_URL).query({ sort: pokeSort, direction: asc });
+    this.setState({ pokemon: response.body.results });
+    this.fetchType();
+
+    // this.fetchPokemon();
   }
-  async fetchPokemon(search, sortFilter, sortOrder, perPage) {
-    const response = await request.get(POKEMON_API_URL).query({ pokemon: search })
+
+  async fetchPokemon(search, sortFilter, sortOrder, perPage, page, type) {
+    console.log(sortFilter, type);
+    //can change all this state so it's names match the apis query params and pass in as one object to query
+    const response = await request.get(POKEMON_API_URL)
+      .query({ pokemon: search })
+      .query({ type: type || undefined })
       .query({ sort: sortFilter, direction: sortOrder })
-      .query({ perPage: perPage });
+      .query({ perPage: perPage })
+      .query({ page: page });
+
 
     this.setState({ pokemon: response.body.results });
 
-  } 
+  }
+  // if (pokemon.length === 0) {
+  //   console.log('no more poke');
 
-  handleSearch = ({ search, sortFilter, sortOrder, perPage }) => {
-    // this.setState ({ search: search });
-    this.fetchPokemon(search, sortFilter, sortOrder, perPage);
-  }; 
-  
-  // async handleSort(sortFilter) {
-  //   this.fetchPokemon(sortFilter);
-  // }
-
-  // handleSort = ({ sortFilter }) => {
-  //   console.log(sortFilter);
-  //   const pokemon = this.state.pokemon;
-  //   const sortedPokemon = pokemon
-  //     .sort((a, b) => {
-        
-  //       if (sortFilter === 'attack') {
-  //         if (a[sortFilter] > b[sortFilter]) return -1;
-  //         if (a[sortFilter] < b[sortFilter]) return 1;
-  //         return 0;
-
-  //       } else {
-  //         if (a[sortFilter] < b[sortFilter]) return -1;
-  //         if (a[sortFilter] > b[sortFilter]) return 1;
-  //         return 0;}
-        
+  // } else {
+  //   this.setState({ page: this.state.page + change },
+  //     () => {
+  //       onSearch(this.state);
 
   //     });
-    
-    
-  //   this.setState({ pokemon: sortedPokemon }); 
-  // };
- 
 
- 
 
-  
+  handleSearch = ({ search, sortFilter, sortOrder, perPage, page, type }) => {
+
+    this.fetchPokemon(search, sortFilter, sortOrder, perPage, page, type);
+
+  };
+
+
   render() {
-    const { pokemon } = this.state;
+    const { pokemon, types } = this.state;
     return (
-      
+
+
 
       <div className="App">
-        <Header/>
+        <Header />
 
-        <Search onSearch={this.handleSearch} />
+        <Search onSearch={this.handleSearch} pokemon={pokemon} types={types} />
 
         <main>
-        
+
           {pokemon && (pokemon.length
-          //why does this only does this only not display no match on load when wrapped in ()!!!
-            ? <PokeList pokemon={pokemon}/>
+            //why does this only does this only not display no match on load when wrapped in ()!!!
+            ? <PokeList pokemon={pokemon} />
             : <p className="noMatch">No matching Pokemon</p>)}
           {/* <PokeList pokemon={pokemon}/> */}
         </main>
-        <Footer/>
+        <Footer />
 
-       
+
       </div>
 
     );
